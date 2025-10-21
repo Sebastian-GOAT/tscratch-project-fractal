@@ -1,10 +1,10 @@
-import { canvas, Engine, Rectangle, Text } from 'tscratch';
+import { canvas, Engine, Pen, Rectangle, Text } from 'tscratch';
 
 const engine = Engine.init();
 
 // Changable values
-const size = 75;
-const maxDepth = 9;
+const size = 100;
+const maxDepth = 10;
 const delayMs = 0;
 
 // Base square
@@ -14,6 +14,9 @@ const rect = new Rectangle({
     height: size,
     hidden: true
 });
+
+// Pen sprite
+const pen = new Pen();
 
 // Watermark
 new Text({
@@ -36,13 +39,9 @@ async function tree(depth: number, sideLength: number) {
     if (depth > maxDepth) return;
 
     // Clone
-    new Rectangle({
-        x: rect.x,
-        y: rect.y,
-        dir: rect.dir,
-        width: sideLength,
-        height: sideLength
-    });
+    rect.setWidth(sideLength);
+    rect.setHeight(sideLength);
+    pen.stamp(rect);
     
     // Store initial values
     const prevX = rect.x;
